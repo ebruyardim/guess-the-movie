@@ -36,8 +36,12 @@ export default function SignIn() {
         await signInWithEmailAndPassword(auth, email, password);
       }
       // Redirect will happen automatically via useEffect when user state changes
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(String(err));
+      }
     } finally {
       setIsLoading(false);
     }
@@ -51,8 +55,12 @@ export default function SignIn() {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
       // Redirect will happen automatically via useEffect when user state changes
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(String(err));
+      }
     } finally {
       setIsGoogleLoading(false);
     }
